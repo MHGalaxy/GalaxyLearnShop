@@ -1,0 +1,146 @@
+﻿@using GalaxyLearn.Core.DTOs.UserPanel
+@model UserDashboardViewModel
+
+@{
+    ViewData["Title"] = "داشبورد";
+}
+
+<style>
+    .hover-pointer:hover {
+        cursor: pointer;
+    }
+</style>
+
+@section SideBar {
+
+    <div class="dashboard__sidebar scroll-bar-1">
+
+        <div class="sidebar -dashboard">
+
+            <div class="sidebar__item -is-active -dark-bg-dark-2">
+                <a href="/UserPanel/Dashboard" class="d-flex items-center text-16 lh-1 fw-500 ">
+                    <i class="text-20 icon-discovery ml-15"></i>
+                    داشبورد
+                </a>
+            </div>
+
+            <div class="sidebar__item">
+                <a href="/UserPanel/EditProfile" class="d-flex items-center text-16 lh-1 fw-500 ">
+                    <i class="text-20 icon-setting ml-15"></i>
+                    ویرایش پروفایل
+                </a>
+            </div>
+
+            <div class="sidebar__item">
+                <a href="/UserPanel/Wallet" class="d-flex items-center text-16 lh-1 fw-500 ">
+                    <i class="text-20 icon-save-money ml-15"></i>
+                    کیف پول
+                </a>
+            </div>
+
+            <div class="sidebar__item">
+                <a  onclick="logout();" class="d-flex items-center text-16 lh-1 fw-500 hover-pointer">
+                    <i class="text-20 icon-power ml-15"></i>
+                    خروج از حساب کاربری
+                </a>
+            </div>
+
+            <div class="sidebar__item">
+                <a href="/" class="d-flex items-center text-16 lh-1 fw-500 ">
+                    <i class="text-20 icon-arrow-right ml-15"></i>
+                    بازگشت به خانه
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+
+
+
+<div class="dashboard__content bg-light-4">
+    <div class="row pb-50 mb-10">
+        <div class="col-auto">
+
+            <h1 class="text-24 lh-12 fw-700 ff-estedad">داشبورد</h1>
+            <div class="breadcrumbs mt-10 pt-0 pb-0">
+                <div class="breadcrumbs__content">
+                    <div class="breadcrumbs__item">
+                        <span>صفحه اصلی</span>
+                    </div>
+                    <div class="breadcrumbs__item">
+                        <span>پنل کاربری</span>
+                    </div>
+                    <div class="breadcrumbs__item">
+                        <span>داشبورد</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row y-gap-50">
+        <div class="col-xl-9 col-lg-12">
+            <div class="row y-gap-30">
+
+                <div class="col-xl-4 col-md-6">
+                    <div class="d-flex justify-between items-center py-35 px-30 rounded-16 bg-white -dark-bg-dark-1 shadow-4">
+                        <div>
+                            <div class="lh-1 fw-500">موجودی</div>
+                            <div class="text-24 lh-1 fw-700 text-dark-1 mt-20 ff-estedad">@Model.UserAcountBalance.ToString("#,0 تومان")</div>
+                            <div class="lh-1 mt-25"><a href="/UserPanel/Wallet" class="text-purple-1">شارژ کیف پول</a></div>
+                        </div>
+
+                        <i class="text-40 icon-coupon text-purple-1"></i>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6">
+                    <div class="d-flex justify-between items-center py-35 px-30 rounded-16 bg-white -dark-bg-dark-1 shadow-4">
+                        <div>
+                            <div class="lh-1 fw-500">دوره های من</div>
+                            <div class="text-24 lh-1 fw-700 text-dark-1 mt-20 ff-estedad">0 عدد</div>
+                            <div class="lh-1 mt-25"><a href="" class="text-purple-1">مشاهده</a></div>
+                        </div>
+
+                        <i class="text-40 icon-play-button text-purple-1"></i>
+                    </div>
+                </div>
+
+                <div class="col-xl-4">
+                    <div class="d-flex justify-between items-center py-35 px-30 rounded-16 bg-white -dark-bg-dark-1 shadow-4">
+                        <div>
+                            <div class="lh-1 fw-500">تاریخ عضویت</div>
+                            <div class="text-24 lh-1 fw-700 text-dark-1 mt-20 ff-estedad">@Model.RegisterDate</div>
+                        </div>
+
+                        <i class="text-40 icon-graduate-cap text-purple-1"></i>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row y-gap-30 pt-30">
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-lg-12">
+            <div class="row y-gap-30">
+                <div class="col-12">
+                    <div class="d-flex items-center flex-column text-center py-40 px-40 rounded-16 bg-white -dark-bg-dark-1 shadow-4">
+                        <img class="size-100 rounded-circle" src="/img/user/@Model.UserAvatar" alt="image">
+                        <div class="text-16 fw-500 text-dark-1 mt-20">@Model.FullName</div>
+                        <div class="text-14 lh-1 mt-5">@Model.UserEmail</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

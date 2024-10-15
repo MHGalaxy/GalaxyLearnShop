@@ -1,0 +1,125 @@
+﻿@using GalaxyLearn.Core.DTOs.User
+@model LoginViewModel
+@{
+    ViewData["Title"] = "ورود";
+}
+
+<section data-anim="fade" class="breadcrumbs is-in-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-auto">
+                <div class="breadcrumbs__content">
+
+                    <div class="breadcrumbs__item ">
+                        <a href="/">صفحه اصلی</a>
+                    </div>
+
+                    <div class="breadcrumbs__item ">
+                        <a href="">ورود</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+
+<div class="row justify-center items-center">
+    <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-8 col-sm-10">
+        <div class="px-50 py-50 md:px-25 md:py-25 bg-white shadow-1 rounded-16">
+            <h3 class="text-30 lh-13">ورود</h3>
+            <p class="mt-10">آیا هنوز ثبت نام نکرده اید؟ <a asp-action="Register" asp-controller="Account" class="text-purple-1">ثبت نام</a></p>
+
+            <form class="contact-form respondForm__form row y-gap-20 pt-30" asp-controller="Account" asp-action="Login" id="loginForm">
+                <div class="col-12">
+                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">شماره موبایل</label>
+                    <input asp-for="PhoneNumber" type="text" placeholder="*********09">
+                    <span asp-validation-for="PhoneNumber" class="text-danger mb-2"></span>
+                </div>
+                <div class="col-12">
+                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">رمز عبور</label>
+                    <input asp-for="Password" type="password" placeholder="********">
+                    <span asp-validation-for="Password" class="text-danger mb-2"></span>
+                </div>
+                <div class="col-12">
+                    <div class="form-checkbox">
+                        <input asp-for="IsRemember" id="checkbox-1" type="checkbox">
+                        <div class="form-checkbox__mark">
+                            <div class="form-checkbox__icon icon-check"></div>
+                        </div>
+                        <label for="checkbox-1">&nbsp; مرا بخاطر بسپار </label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" name="submit" id="submit" class="button -md -green-1 text-dark-1 fw-500 w-1/1">
+                        ورود
+                    </button>
+                </div>
+
+                <p class="m-0">آیا رمز عبور خود را فراموش کرده اید؟ <a asp-action="ForgetPassword" asp-controller="Account" class="text-purple-1">بازیابی رمز عبور</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            onlyNumber();
+            loginSubmit();
+        });
+
+        function onlyNumber() {
+            $('#PhoneNumber').on('input', function () {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            });
+        }
+
+        function loginSubmit() {
+            $("#loginForm").submit(function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr("action"),
+                    method: $(this).attr("method"),
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "ورود موفقیت آمیز!",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            setTimeout(function () {
+                                window.location.href = '/';
+                            }, 2000);
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "خطا در ورود!",
+                                text: result.message,
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: "error",
+                            title: "خطا در ورود!",
+                            text: 'در فرآیند ورود خطایی رخ داده است! دوباره امتحان کنید.',
+                        });
+                    }
+                });
+            });
+        }
+
+    </script>
+}

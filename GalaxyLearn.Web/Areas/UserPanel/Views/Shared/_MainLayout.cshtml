@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <partial name="_MainMetaTags" />
+    <partial name="_MainStyles" />
+
+    <title>پنل کاربری | @ViewData["Title"]</title>
+</head>
+
+<body class="preloader-visible" data-barba="wrapper">
+    <!-- preloader start -->
+    <div class="preloader js-preloader">
+        <div class="preloader__bg"></div>
+    </div>
+    <!-- preloader end -->
+    <!-- barba container start -->
+    <div class="barba-container" data-barba="container">
+
+
+        <main class="main-content">
+
+            <partial name="_MainHeader" />
+
+            <div class="content-wrapper js-content-wrapper">
+                <div class="dashboard -home-9 js-dashboard-home-9">
+
+                    @RenderSection("SideBar", false)
+
+                    <div class="dashboard__main">
+
+                        @RenderBody()
+
+                        <partial name="_MainFooter" />
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+    </div>
+    <partial name="_MainScripts" />
+    <partial name="_ValidationScriptsPartial" />
+
+    @RenderSection("Scripts", false)
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GalaxyLearn.Web", "GalaxyLearn.Web\GalaxyLearn.Web.csproj", "{0A6F14A1-DE0F-4826-8FC8-5DFE1D830434}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GalaxyLearn.DataLayer", "GalaxyLearn.DataLayer\GalaxyLearn.DataLayer.csproj", "{4A3A1738-B258-4BA8-9A92-9507E32DFEE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GalaxyLearn.Core", "GalaxyLearn.Core\GalaxyLearn.Core.csproj", "{6BAC21FA-198B-4047-9495-B4BFD1E756CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A6F14A1-DE0F-4826-8FC8-5DFE1D830434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A6F14A1-DE0F-4826-8FC8-5DFE1D830434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A6F14A1-DE0F-4826-8FC8-5DFE1D830434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A6F14A1-DE0F-4826-8FC8-5DFE1D830434}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A3A1738-B258-4BA8-9A92-9507E32DFEE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A3A1738-B258-4BA8-9A92-9507E32DFEE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A3A1738-B258-4BA8-9A92-9507E32DFEE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A3A1738-B258-4BA8-9A92-9507E32DFEE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BAC21FA-198B-4047-9495-B4BFD1E756CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BAC21FA-198B-4047-9495-B4BFD1E756CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BAC21FA-198B-4047-9495-B4BFD1E756CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BAC21FA-198B-4047-9495-B4BFD1E756CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {83CF1934-CC2E-48DB-8BFA-EE4FE017EE80}
+	EndGlobalSection
+EndGlobal

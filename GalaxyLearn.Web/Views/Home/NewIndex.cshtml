@@ -1,0 +1,60 @@
+﻿
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<button id="Btn">Click me</button>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+
+
+
+
+
+
+@section Scripts {
+
+    <script>
+
+        $("#Btn").click(function () {
+            // Swal.fire({
+            //     title: "ثبت نام موفق!",
+            //     text: "ثبت نام شما موفقیت آمیز بود!",
+            //     icon: "success"
+            // });
+
+            Swal.fire({
+                // position: "top-end",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 3000
+            });
+        })
+
+       
+    </script>
+}

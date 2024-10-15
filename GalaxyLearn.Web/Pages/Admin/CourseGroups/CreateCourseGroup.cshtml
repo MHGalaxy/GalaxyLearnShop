@@ -1,0 +1,139 @@
+﻿@page
+@using GalaxyLearn.DataLayer.Entities.Course;
+@model GalaxyLearn.Web.Pages.Admin.CourseGroups.CreateCourseGroupModel
+@{
+    ViewData["Title"] = "افزودن گروه درسی جدید";
+    var parents = ViewData["Parents"] as List<CourseGroup>;
+}
+
+@section Styles {
+    <link href="/admin/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/css/app-rtl.min.css" rel="stylesheet" type="text/css" id="app-stylesheet" />
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box page-title-box-alt">
+            <h4 class="page-title" style="font-family:'IRANSans'">افزودن گروه درسی جدید</h4>
+            <div class="page-title-right d-none d-lg-inline-block" dir="ltr">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">پنل مدیریت</li>
+                    <li class="breadcrumb-item">گروه های درسی</li>
+                    <li class="breadcrumb-item">افزودن گروه درسی جدید</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">اطلاعات گروه درسی</h4>
+                <div class="p-2">
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" id="addCourseGroupForm">
+
+                        <div class="mb-2 row">
+                            <label class="col-md-2 col-form-label" asp-for="CreateCourseGroupViewModel.CourseGroupName"></label>
+                            <div class="col-md-10">
+                                <input asp-for="CreateCourseGroupViewModel.CourseGroupName" type="text" class="form-control" placeholder="نام (فارسی)" />
+                                <span asp-validation-for="CreateCourseGroupViewModel.CourseGroupName" class="help-block text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label class="col-md-2 col-form-label" asp-for="CreateCourseGroupViewModel.CourseGroupTitle"></label>
+                            <div class="col-md-10">
+                                <input asp-for="CreateCourseGroupViewModel.CourseGroupTitle" type="text" class="form-control" placeholder="نام (لاتین)" />
+                                <span asp-validation-for="CreateCourseGroupViewModel.CourseGroupTitle" class="help-block text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label class="col-md-2 col-form-label" asp-for="CreateCourseGroupViewModel.ParentId"></label>
+                            <div class="col-md-10">
+                                <select asp-for="CreateCourseGroupViewModel.ParentId" class="form-control" data-toggle="select2">
+
+                                    <option class="pr-12" value="" selected >گروه درسی پدر (پیش فرض)</option>
+                                    @foreach(var parent in parents)
+                                    {
+                                        <option class="pr-12" value="@parent.CourseGroupId">@parent.CourseGroupTitle</option>
+                                    }
+
+                                </select>
+                                <span asp-validation-for="CreateCourseGroupViewModel.ParentId" class="help-block text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <div class="col-md-3 col-sm-4 mb-1">
+                                <button type="submit" class="form-control btn btn-success">ثبت</button>
+                            </div>
+                            <div class="col-md-3 col-sm-4">
+                                <a href="/Admin/CourseGroups" class="form-control btn btn-light">بازگشت</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="/admin/libs/select2/js/select2.min.js"></script>
+    <script src="/admin/js/pages/form-advanced.init.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            addCourseGroupSubmit();
+        });
+
+
+
+        function addCourseGroupSubmit() {
+            $("#addCourseGroupForm").submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '/Admin/CourseGroups/CreateCourseGroup',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "ذخیره موفقیت آمیز!",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+
+                            setTimeout(function () {
+                                window.location.href = '/Admin/CourseGroups';
+                            }, 2000);
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "خطا در ذخیره اطلاعات!",
+                                text: result.message
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "خطا در ذخیره اطلاعات!",
+                            text: "در فرآیند ثبت گروه درسی مشکلی بوجود آمده است"
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <partial name="_DefaultMetaTags" />
+    <partial name="_DefaultStyles" />
+
+    <title>آکادمی فاطمه کهکشان | @ViewData["Title"]</title>
+</head>
+
+<body class="preloader-visible" data-barba="wrapper">
+    <partial name="_DefaultPreloader" />
+
+
+    <main class="main-content">
+
+        <partial name="_DefaultHeader" />
+
+
+        <div class="content-wrapper  js-content-wrapper">
+
+            @RenderSection("MainBox", false)
+
+            @RenderBody()
+
+            <partial name="_DefaultFooter" />
+        </div>
+    </main>
+
+    <partial name="_DefaultScripts" />
+    <partial name="_ValidationScriptsPartial" />
+
+    @RenderSection("Scripts", false)
+</body>
+
+</html>

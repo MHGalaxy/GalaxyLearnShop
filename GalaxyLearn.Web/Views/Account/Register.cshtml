@@ -1,0 +1,152 @@
+﻿@using GalaxyLearn.Core.DTOs.User
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "ثبت نام";
+}
+
+<section data-anim="fade" class="breadcrumbs is-in-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-auto">
+                <div class="breadcrumbs__content">
+
+                    <div class="breadcrumbs__item ">
+                        <a href="/">صفحه اصلی</a>
+                    </div>
+
+                    <div class="breadcrumbs__item ">
+                        <a href="#">ثبت نام</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+
+<div class="row justify-center items-center">
+    <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-8 col-sm-10">
+        <div class="px-50 py-50 md:px-25 md:py-25 bg-white shadow-1 rounded-16">
+            <h3 class="text-30 lh-13">ثبت نام</h3>
+            <p class="mt-10">آیا از قبل ثبت نام کرده اید؟ <a asp-action="Login" asp-controller="Account" class="text-purple-1">ورود</a></p>
+
+            <form class="contact-form respondForm__form row y-gap-20 pt-30" method="post" asp-controller="Account" asp-action="Register" id="registerForm">
+                <div class="col-12">
+                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">نام</label>
+                    <input asp-for="FirstName" type="text" placeholder="نام">
+                    <span asp-validation-for="FirstName" class="text-danger mb-2"></span>
+                </div>
+                <div class="col-12">
+                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">نام خانوادگی</label>
+                    <input asp-for="LastName" type="text" placeholder="نام خانوادگی">
+                    <span asp-validation-for="FirstName" class="text-danger mb-2"></span>
+                </div>
+                <div class="col-12">
+                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">شماره موبایل</label>
+                    <input asp-for="PhoneNumber" type="text" placeholder="*********09">
+                    <span asp-validation-for="PhoneNumber" class="text-danger mb-2"></span>
+                </div>
+                <div class="col-12">
+                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">ایمیل (اختیاری)</label>
+                    <input asp-for="UserEmail" type="email" placeholder="ایمیل">
+                    <span asp-validation-for="UserEmail" class="text-danger mb-2"></span>
+                </div>
+                <div class="col-12">
+                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">رمز عبور</label>
+                    <input asp-for="Password" type="password" placeholder="********">
+                    <span asp-validation-for="Password" class="text-danger mb-2"></span>
+                </div>
+                <div class="col-12">
+                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">تکرار رمز عبور</label>
+                    <input asp-for="ConfirmedPassword" type="password" placeholder="********">
+                    <span asp-validation-for="ConfirmedPassword" class="text-danger mb-2"></span>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="button -md -green-1 text-dark-1 fw-500 w-1/1">
+                        ثبت نام
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            onlyNumber();
+            registerSubmit();
+        });
+
+        function onlyNumber() {
+            $('#PhoneNumber').on('input', function () {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            });
+        }
+
+        function registerSubmit() {
+            $("#registerForm").submit(function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr("action"),
+                    method: $(this).attr("method"),
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "ثبت نام موفقیت آمیز!",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+
+                            setTimeout(function () {
+                                window.location.href = '/Account/VerificationRegisterCode/' + result.activeCode;
+                                sendSms(result.activeCode);
+                            }, 2000);
+
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "خطا در ثبت نام!",
+                                text: result.message,
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "خطا در ثبت نام!",
+                            text: result.message,
+                        });
+                    }
+                });
+            });
+        }
+
+        function sendSms(activeCode) {
+            $.ajax({
+                url: '/Account/SendRegisterSms',
+                method: 'POST',
+                data: {
+                    activeCode: activeCode
+                },
+                success: function (result) {
+                },
+                error: function (error) {
+                }
+            });
+        }
+
+    </script>
+}

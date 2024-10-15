@@ -1,0 +1,228 @@
+﻿<header data-anim="fade" data-add-bg="bg-dark-1" class="header -type-1 js-header">
+
+
+    <div class="header__container">
+        <div class="row justify-between items-center">
+
+            <div class="col-auto">
+                <div class="header-left">
+
+                    <div class="header__logo ">
+                        <a data-barba href="/">
+                            <img src="/img/general/galaxy-logo.png" alt="logo">
+                        </a>
+                    </div>
+                    <div class=" mr-60 xl:mr-30 xl:d-none">
+                        <a href="/" class="d-flex items-center" style="color:#008796 !important; font-weight: bold !important;">
+                            آکادمی آموزشی فاطمه کهکشان
+                        </a>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="header-menu js-mobile-menu-toggle ">
+                <div class="header-menu__content">
+                    <div class="mobile-bg js-mobile-bg"></div>
+
+                    <div class="d-none xl:d-flex items-center px-20 py-20 border-bottom-light">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Login" asp-controller="Account" class="text-dark-1">ورود</a>
+                            <a asp-action="Register" asp-controller="Account" class="text-dark-1 mr-30">ثبت نام</a>
+                        }
+                        else
+                        {
+                            <a onclick="logout();" class="text-dark-1 logout-btn">خروج</a>
+                            <a asp-action="Dashboard" asp-controller="Home" asp-area="UserPanel" class="text-dark-1 mr-30">پنل کاربری</a>
+                        }
+                    </div>
+
+                    @await Component.InvokeAsync("MenuGroupComponent")
+
+                    <div class="mobile-footer px-20 py-20 border-top-light js-mobile-footer">
+                        <div class="mobile-footer__number">
+                            <div class="text-17 fw-500 text-dark-1">تماس با ما</div>
+                            <div class="text-17 fw-500 text-purple-1">091201550580</div>
+                        </div>
+
+                        <div class="lh-2 mt-10">
+                            <div>اصفهان، خیابان شیخ مفید<br> خیابان پارک وی مجتمع صدف</div>
+                            <div>example@educrat.com</div>
+                        </div>
+
+                        <div class="mobile-socials mt-10">
+
+                            <a href="#" class="d-flex items-center justify-center rounded-full size-40">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+
+                            <a href="#" class="d-flex items-center justify-center rounded-full size-40">
+                                <i class="fa fa-telegram"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-menu-close" data-el-toggle=".js-mobile-menu-toggle">
+                    <div class="size-40 d-flex items-center justify-center rounded-full bg-white">
+                        <div class="icon-close text-dark-1 text-16"></div>
+                    </div>
+                </div>
+
+                <div class="header-menu-bg"></div>
+            </div>
+
+
+            <div class="col-auto">
+                <div class="header-right d-flex items-center">
+                    <div class="header-right__icons text-white d-flex items-center">
+
+                        <div class="">
+                            <button class="d-flex items-center text-white" data-el-toggle=".js-search-toggle">
+                                <i class="text-20 icon icon-search"></i>
+                            </button>
+
+                            <div class="toggle-element js-search-toggle">
+                                <div class="header-search pt-90 bg-white shadow-4">
+                                    <div class="container">
+                                        <div class="header-search__field">
+                                            <div class="icon icon-search text-dark-1"></div>
+                                            <input type="text" class="col-12 text-15 lh-12 text-dark-1 fw-500" placeholder="جستجوی دوره">
+
+                                            <button class="d-flex items-center justify-center size-40 rounded-full bg-purple-3" data-el-toggle=".js-search-toggle">
+                                                <img src="/img/menus/close.svg" alt="icon">
+                                            </button>
+                                        </div>
+
+                                        <div class="header-search__content mt-30">
+                                            <div class="text-17 text-dark-1 fw-500">دوره های محبوب</div>
+
+                                            <div class="d-flex y-gap-5 flex-column mt-20">
+                                                <a href="courses-single-1.html" class="text-dark-1">دوره نهایی طراحی - مبتدی تا پیشرفته</a>
+                                                <a href="courses-single-2.html" class="text-dark-1">طراح و تحلیلگر نرم افزار</a>
+                                                <a href="courses-single-3.html" class="text-dark-1">یادگیری مدل سازی سه بعدی برای مبتدیان</a>
+                                                <a href="courses-single-4.html" class="text-dark-1">ملزومات طراحی تجربه کاربری - Adobe XD UI UX Design</a>
+                                                <a href="courses-single-5.html" class="text-dark-1">کلاس کارشناسی ارشد طراحی گرافیک</a>
+                                                <a href="courses-single-6.html" class="text-dark-1">دوره آموزشی Adobe Photoshop CC – Essentials</a>
+                                            </div>
+
+                                            <div class="mt-30">
+                                                <button class="uppercase underline">برای دیدن همه نتایج جستجو، ENTER را فشار دهید</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header-search__bg" data-el-toggle=".js-search-toggle"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="relative mr-30 xl:mr-20">
+                            <button class="d-flex items-center text-white" data-el-toggle=".js-cart-toggle">
+                                <i class="text-20 icon icon-basket"></i>
+                            </button>
+
+                            <div class="toggle-element js-cart-toggle">
+                                <div class="header-cart bg-white -dark-bg-dark-1 rounded-8">
+                                    <div class="px-30 pt-30 pb-10">
+
+                                        <div class="row justify-between x-gap-40 pb-20">
+                                            <div class="col">
+                                                <div class="row x-gap-10 y-gap-10">
+                                                    <div class="col-auto">
+                                                        <img src="/img/menus/cart/1.png" alt="image">
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <div class="text-dark-1 lh-15">دوره نهایی نقاشی از مبتدی تا پیشرفته...</div>
+
+                                                        <div class="d-flex items-center mt-10">
+                                                            <div class="lh-12 fw-500 line-through text-light-1 ml-10">179</div>
+                                                            <div class="text-15 lh-12 fw-500 text-dark-1">79000 تومان</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-auto">
+                                                <button><img src="/img/menus/close.svg" alt="icon"></button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-between x-gap-40 pb-20">
+                                            <div class="col">
+                                                <div class="row x-gap-10 y-gap-10">
+                                                    <div class="col-auto">
+                                                        <img src="/img/menus/cart/2.png" alt="image">
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <div class="text-dark-1 lh-15">آموزش ساخت وب سایت خبری با React Node</div>
+
+                                                        <div class="d-flex items-center mt-10">
+                                                            <div class="lh-12 fw-500 line-through text-light-1 ml-10">179</div>
+                                                            <div class="text-15 lh-12 fw-500 text-dark-1">79000 تومان</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-auto">
+                                                <button><img src="/img/menus/close.svg" alt="icon"></button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="px-30 pt-20 pb-30 border-top-light">
+                                        <div class="d-flex justify-between">
+                                            <div class="text-18 lh-12 text-dark-1 fw-500">جمع کل:</div>
+                                            <div class="text-18 lh-12 text-dark-1 fw-500">659000 تومان</div>
+                                        </div>
+
+                                        <div class="row x-gap-20 y-gap-10 pt-30">
+                                            <div class="col-sm-6">
+                                                <button class="button py-20 -dark-1 text-white -dark-button-white col-12">مشاهده سبد</button>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button class="button py-20 -purple-1 text-white col-12">تسویه حساب</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="d-none xl:d-block mr-20">
+                            <button class="text-white items-center" data-el-toggle=".js-mobile-menu-toggle">
+                                <i class="text-11 icon icon-mobile-menu"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <div class="header-right__buttons d-flex items-center mr-30 md:d-none">
+                            <a asp-action="Login" asp-controller="Account" class="button -underline text-white">ورود</a>
+                            <a asp-action="Register" asp-controller="Account" class="button -sm -white text-dark-1 mr-30">ثبت نام</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="header-right__buttons d-flex items-center mr-30 md:d-none">
+                            <a onclick="logout();" class="button -underline text-white logout-btn">خروج</a>
+                            <a asp-action="Dashboard" asp-controller="Home" asp-area="UserPanel" class="button -sm -white text-dark-1 mr-30">پنل کاربری</a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>

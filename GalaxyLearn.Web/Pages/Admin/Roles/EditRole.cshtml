@@ -1,0 +1,159 @@
+﻿@page "{roleId}"
+@using GalaxyLearn.DataLayer.Entities.Permission;
+@model GalaxyLearn.Web.Pages.Admin.Roles.EditRoleModel
+@{
+    ViewData["Title"] = "ویرایش نقش"; 
+    var permissions = ViewData["Permissions"] as List<Permission>;
+}
+
+@section Styles {
+    <link href="/admin/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/css/app-rtl.min.css" rel="stylesheet" type="text/css" id="app-stylesheet" />
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box page-title-box-alt">
+            <h4 class="page-title" style="font-family:'IRANSans'">ویرایش نقش</h4>
+            <div class="page-title-right d-none d-lg-inline-block" dir="ltr">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">پنل مدیریت</li>
+                    <li class="breadcrumb-item">نقش ها</li>
+                    <li class="breadcrumb-item">ویرایش نقش</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">اطلاعات نقش</h4>
+                <div class="p-2">
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" id="editRoleForm">
+
+                        <input asp-for="EditRoleViewModel.RoleId" type="hidden" />
+
+                        <div class="mb-2 row">
+                            <label class="col-md-2 col-form-label" asp-for="EditRoleViewModel.RoleName"></label>
+                            <div class="col-md-10">
+                                <input asp-for="EditRoleViewModel.RoleName" type="text" class="form-control" placeholder="نام (فارسی)" />
+                                <span asp-validation-for="EditRoleViewModel.RoleName" class="help-block text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label class="col-md-2 col-form-label" asp-for="EditRoleViewModel.RoleTitle"></label>
+                            <div class="col-md-10">
+                                <input asp-for="EditRoleViewModel.RoleTitle" type="text" class="form-control" placeholder="نام (لاتین)" />
+                                <span asp-validation-for="EditRoleViewModel.RoleTitle" class="help-block text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label class="col-md-2 col-form-label" asp-for="EditRoleViewModel.PermissionIds"></label>
+                            <div class="col-md-10">
+                                <select asp-for="EditRoleViewModel.PermissionIds" class="form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="انتخاب کنید ...">
+
+                                    @foreach (var permission in permissions.Where(p => p.ParentId == null))
+                                    {
+                                        <option value="@permission.PermissionId">@permission.PermissionTitle</option>
+                                        @if (permissions.Any(p => p.ParentId == permission.ParentId))
+                                        {
+                                            @foreach (var sub in permissions.Where(p => p.ParentId == permission.PermissionId))
+                                            {
+                                                <option class="pr-2" value="@sub.PermissionId">&#160&#160 @sub.PermissionTitle</option>
+                                                @if (permissions.Any(p => p.ParentId == sub.ParentId))
+                                                {
+                                                    @foreach (var sub2 in permissions.Where(p => p.ParentId == sub.PermissionId))
+                                                    {
+                                                        <option class="pr-12" value="@sub2.PermissionId">&#160&#160&#160&#160&#160&#160  @sub2.PermissionTitle</option>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    @* @foreach (var permission in permissions)
+                                    {
+                                        <option value="@permission.PermissionId">@permission.PermissionTitle</option>
+                                    } *@
+
+                                </select>
+                                <span asp-validation-for="EditRoleViewModel.PermissionIds" class="help-block text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <div class="col-md-3 col-sm-4 mb-1">
+                                <button type="submit" class="form-control btn btn-success">ذخیره</button>
+                            </div>
+                            <div class="col-md-3 col-sm-4">
+                                <a href="/Admin/Roles" class="form-control btn btn-light">بازگشت</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="/admin/libs/select2/js/select2.min.js"></script>
+    <script src="/admin/js/pages/form-advanced.init.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            editRoleSubmit();
+        });
+
+
+
+        function editRoleSubmit() {
+            $("#editRoleForm").submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '/Admin/Roles/EditRole/@Model.EditRoleViewModel.RoleId',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "ذخیره موفقیت آمیز!",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+
+                            setTimeout(function () {
+                                window.location.href = '/Admin/Roles';
+                            }, 2000);
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "خطا در ذخیره اطلاعات!",
+                                text: result.message
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "خطا در ذخیره اطلاعات!",
+                            text: "در فرآیند ویرایش نقش مشکلی بوجود آمده است"
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+}

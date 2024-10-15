@@ -1,0 +1,244 @@
+﻿@using GalaxyLearn.Core.DTOs.Wallet
+@model ChargeWalletViewModel
+
+@{
+    ViewData["Title"] = "کیف پول";
+    var userWallets = ViewBag.UserWallets as List<WalletViewModel> ?? new List<WalletViewModel>();
+}
+
+<style>
+    .hover-pointer:hover {
+        cursor: pointer;
+    }
+</style>
+
+@section SideBar {
+
+    <div class="dashboard__sidebar scroll-bar-1">
+
+        <div class="sidebar -dashboard">
+
+            <div class="sidebar__item">
+                <a href="/UserPanel/Dashboard" class="d-flex items-center text-16 lh-1 fw-500 ">
+                    <i class="text-20 icon-discovery ml-15"></i>
+                    داشبورد
+                </a>
+            </div>
+
+            <div class="sidebar__item">
+                <a href="/UserPanel/EditProfile" class="d-flex items-center text-16 lh-1 fw-500 ">
+                    <i class="text-20 icon-setting ml-15"></i>
+                    ویرایش پروفایل
+                </a>
+            </div>
+
+            <div class="sidebar__item -is-active -dark-bg-dark-2">
+                <a href="/UserPanel/Wallet" class="d-flex items-center text-16 lh-1 fw-500 ">
+                    <i class="text-20 icon-save-money ml-15"></i>
+                    کیف پول
+                </a>
+            </div>
+
+            <div class="sidebar__item">
+                <a onclick="logout();" class="d-flex items-center text-16 lh-1 fw-500 hover-pointer">
+                    <i class="text-20 icon-power ml-15"></i>
+                    خروج از حساب کاربری
+                </a>
+            </div>
+
+            <div class="sidebar__item">
+                <a href="/" class="d-flex items-center text-16 lh-1 fw-500 ">
+                    <i class="text-20 icon-arrow-right ml-15"></i>
+                    بازگشت به خانه
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+
+
+
+<div class="dashboard__content bg-light-4">
+    <div class="row pb-50 mb-10">
+        <div class="col-auto">
+
+            <h1 class="text-24 lh-12 fw-700 ff-estedad">کیف پول</h1>
+            <div class="breadcrumbs mt-10 pt-0 pb-0">
+                <div class="breadcrumbs__content">
+                    <div class="breadcrumbs__item">
+                        <span>صفحه اصلی</span>
+                    </div>
+                    <div class="breadcrumbs__item">
+                        <span>پنل کاربری</span>
+                    </div>
+                    <div class="breadcrumbs__item">
+                        <span>کیف پول</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row y-gap-30">
+        <div class="col-xl-4 col-md-6">
+            <div class="d-flex justify-between items-center py-35 px-30 rounded-16 bg-white -dark-bg-dark-1 shadow-4">
+                <div>
+                    <div class="lh-1 fw-500">موجودی</div>
+                    <div class="text-24 lh-1 fw-700 text-dark-1 mt-20 ff-estedad">@ViewBag.UserAccountBalance.ToString("#,0 تومان")</div>
+
+                </div>
+
+                <i class="text-40 icon-coupon text-purple-1"></i>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="rounded-16 bg-white -dark-bg-dark-1 shadow-4 h-100">
+                <div class="tabs -active-purple-2 js-tabs pt-0">
+                    <div class="tabs__controls d-flex x-gap-30 items-center pt-20 px-30 border-bottom-light js-tabs-controls">
+
+                        <button class="tabs__button text-light-1 js-tabs-button text-nowrap is-active" data-tab-target=".-tab-item-1" type="button">
+                            شارژ کیف پول
+                        </button>
+
+                        <button class="tabs__button text-light-1 js-tabs-button text-nowrap" data-tab-target=".-tab-item-2" type="button">
+                            لیست تراکنش ها
+                        </button>
+
+                    </div>
+
+                    <div class="tabs__content py-30 px-30 js-tabs-content">
+
+                        <div class="tabs__pane -tab-item-1 is-active">
+                            <form asp-action="Index" asp-controller="Wallet" asp-area="UserPanel" method="post" id="chargeWalletForm" class="contact-form row y-gap-30">
+
+                                <div class="col-md-6">
+                                    <label class="text-15 lh-1 fw-500 text-dark-1 mb-10">مبلغ (به تومان)</label>
+                                    <input asp-for="Amount" type="text" placeholder="مبلغ (به تومان)" />
+                                    <span asp-validation-for="Amount" class="text-danger mb-2"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="button -md -purple-1 text-white">شارژ حساب</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tabs__pane -tab-item-2">
+                            <div class="table-responsive">
+                                <table class="table w-1/1">
+                                    <thead>
+                                        <tr>
+                                            <th>ردیف</th>
+                                            <th>مقدار</th>
+                                            <th>نوع</th>
+                                            <th>توضیحات</th>
+                                            <th>تاریخ</th>
+                                            <th>زمان</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int rowNumber = 1;
+                                        }
+                                        @foreach (var wallet in userWallets)
+                                        {
+                                            <tr>
+                                                <td>@rowNumber</td>
+                                                <td>@wallet.Amount.ToString("#,0 تومان")</td>
+                                                <td>@wallet.WalltType</td>
+                                                <td>@wallet.Description</td>
+                                                <td>@wallet.Date</td>
+                                                <td>@wallet.Time</td>
+                                            </tr>
+                                            rowNumber++;
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            onlyNumber();
+            chargeWalletSubmit();
+        });
+
+        function onlyNumber() {
+            $('#Amount').on("input", function () {
+                let numericValue = $(this).val().replace(/[^0-9]/g, '');
+
+                let formattedValue = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                }).format(numericValue);
+
+                formattedValue = formattedValue.replace('$', '');
+
+                $(this).val(formattedValue);
+            });
+        }
+
+        function chargeWalletSubmit() {
+            $("#chargeWalletForm").submit(function (event) {
+                event.preventDefault();
+
+                 let numericValue = $("#Amount").val().replace(/[^0-9]/g, '');
+                 $("#Amount").val(numericValue);
+
+                $.ajax({
+                    url: $(this).attr("action"),
+                    method: $(this).attr("method"),
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "شارژ حساب موفقیت آمیز!",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 2000);
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "خطا در شارژ کیف پول!",
+                                text: result.message,
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "خطا در شارژ کیف پول!",
+                            text: result.message,
+                        });
+                    }
+                });
+            });
+        }
+
+    </script>
+}

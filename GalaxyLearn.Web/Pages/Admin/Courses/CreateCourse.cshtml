@@ -1,0 +1,308 @@
+﻿@page
+@model GalaxyLearn.Web.Pages.Admin.Courses.CreateCourseModel
+@{
+    ViewData["Title"] = "افزودن دوره جدید";
+}
+
+@section Styles {
+    <link href="/admin/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/css/app-rtl.min.css" rel="stylesheet" type="text/css" id="app-stylesheet" />
+    @* <link href="/admin/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" /> *@
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box page-title-box-alt">
+            <h4 class="page-title" style="font-family:'IRANSans'">افزودن دوره جدید</h4>
+            <div class="page-title-right d-none d-lg-inline-block" dir="ltr">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">پنل مدیریت</li>
+                    <li class="breadcrumb-item">دوره ها</li>
+                    <li class="breadcrumb-item">افزودن دوره جدید</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" id="addCourseForm">
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">اطلاعات دوره</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="p-2">
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.CourseTitle"></label>
+                                    <div class="col-md-10">
+                                        <input asp-for="CreateCourseViewModel.CourseTitle" type="text" class="form-control" placeholder="عنوان دوره" />
+                                        <span asp-validation-for="CreateCourseViewModel.CourseTitle" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.CourseGroupId"></label>
+                                    <div class="col-md-10">
+                                        <select asp-for="CreateCourseViewModel.CourseGroupId" asp-items="@(ViewData["Groups"] as SelectList)" class="form-control" data-toggle="select2" data-placeholder="انتخاب کنید">
+                                            <option class="pr-12" value="" selected></option>
+                                        </select>
+                                        <span asp-validation-for="CreateCourseViewModel.CourseGroupId" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.CourseSubGroupId"></label>
+                                    <div class="col-md-10">
+                                        <select asp-for="CreateCourseViewModel.CourseSubGroupId" asp-items="@(ViewData["SubGroups"] as SelectList)" class="form-control" data-toggle="select2" data-placeholder="انتخاب کنید (اختیاری)">
+                                            <option class="pr-12" value="" selected></option>
+                                        </select>
+                                        <span asp-validation-for="CreateCourseViewModel.CourseSubGroupId" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.TeacherId"></label>
+                                    <div class="col-md-10">
+                                        <select asp-for="CreateCourseViewModel.TeacherId" asp-items="@(ViewData["Teachers"] as SelectList)" class="form-control" data-toggle="select2" data-placeholder="انتخاب کنید">
+                                            <option class="pr-12" value="" selected></option>
+                                        </select>
+                                        <span asp-validation-for="CreateCourseViewModel.TeacherId" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.CourseDescription"></label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" dir="rtl" rows="5" asp-for="CreateCourseViewModel.CourseDescription" placeholder="شرح دوره"></textarea>
+                                        <span asp-validation-for="CreateCourseViewModel.CourseDescription" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.CoursePrice"></label>
+                                    <div class="col-md-10">
+                                        <input asp-for="CreateCourseViewModel.CoursePrice" class="form-control" type="text" placeholder="قیمت (به تومان)" />
+                                        <span asp-validation-for="CreateCourseViewModel.CoursePrice" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.CourseDemoFile"></label>
+                                    <div class="col-md-6">
+                                        <input asp-for="CreateCourseViewModel.CourseDemoFile" class="form-control" />
+                                        <span asp-validation-for="CreateCourseViewModel.CourseDemoFile" class="help-block text-danger small"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="#" id="resetDemo" class="form-control btn btn-danger mb-2" title="حذف فایل دمو"><i class="mdi mdi-delete"></i> حذف فایل دمو</a>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.IsLock"></label>
+                                    <div class="col-md-10">
+                                        <input asp-for="CreateCourseViewModel.IsLock" class="form-check-input float-end" type="checkbox" />
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.CourseLevelId"></label>
+                                    <div class="col-md-10">
+                                        <select asp-for="CreateCourseViewModel.CourseLevelId" asp-items="@(ViewData["Levels"] as SelectList)" class="form-control" data-toggle="select2" data-placeholder="انتخاب کنید">
+                                            <option class="pr-12" value="" selected></option>
+                                        </select>
+                                        <span asp-validation-for="CreateCourseViewModel.CourseLevelId" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.CourseStatusId"></label>
+                                    <div class="col-md-10">
+                                        <select asp-for="CreateCourseViewModel.CourseStatusId" asp-items="@(ViewData["Statues"] as SelectList)" class="form-control" data-toggle="select2" data-placeholder="انتخاب کنید">
+                                            <option class="pr-12" value="" selected></option>
+                                        </select>
+                                        <span asp-validation-for="CreateCourseViewModel.CourseStatusId" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <label class="col-md-2 col-form-label" asp-for="CreateCourseViewModel.Tags"></label>
+                                    <div class="col-md-10">
+                                        <input asp-for="CreateCourseViewModel.Tags" type="text" class="form-control" placeholder="برچسب ها" />
+                                        <span asp-validation-for="CreateCourseViewModel.Tags" class="help-block text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 row">
+                                    <div class="col-md-3 col-sm-4 mb-1">
+                                        <button type="submit" class="form-control btn btn-success">ثبت</button>
+                                    </div>
+                                    <div class="col-md-3 col-sm-4">
+                                        <a href="/Admin/Courses" class="form-control btn btn-light">بازگشت</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div> <!-- end card -->
+        </div><!-- end col -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <label class="header-title mb-2" for="example-fileinput">انتخاب تصویر دوره</label><br />
+                    <img class="img-fluid rounded mb-2" src="/img/course/thumb/course-image-default.png" alt="image" id="courseImage">
+                    <input asp-for="CreateCourseViewModel.CourseImageFile" class="form-control mb-2">
+                    <a href="#" id="resetImage" class="form-control btn btn-danger mb-2"><i class="mdi mdi-delete"></i> حذف تصویر</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+@section Scripts {
+    <script src="/admin/libs/select2/js/select2.min.js"></script>
+    <script src="/admin/js/pages/form-advanced.init.js"></script>
+   @*  <script src="/admin/libs/quill/quill.min.js"></script>
+    <script src="/admin/js/pages/form-quilljs.init.js"></script> *@
+
+    <script src="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('CreateCourseViewModel_CourseDescription', {
+            customConfig: '/js/ckeditorConfig.js'
+        });
+    </script> 
+
+    <script>
+        $(document).ready(function () {
+            addCourseSubmit();
+            fillSubGroups();
+            onlyNumber();
+            clearImage(); 
+            clearDemo();
+            $("#CreateCourseViewModel_CourseImageFile").change(function () {
+                readURL(this);
+            });
+        });
+
+        function fillSubGroups() {
+            $("#CreateCourseViewModel_CourseGroupId").change(function () {
+                $("#CreateCourseViewModel_CourseSubGroupId").empty();
+                $.getJSON("/Admin/Courses/CreateCourse?handler=GetSubCourseGroup&courseGroupId=" + $("#CreateCourseViewModel_CourseGroupId :selected").val(),
+                    function (data) {
+                        $.each(data,
+                            function () {
+                                $("#CreateCourseViewModel_CourseSubGroupId").append('<option value=' + this.value + '>' + this.text + '</option>');
+                            });
+                    });
+            });
+        } 
+        
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#courseImage').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function clearImage() {
+            $("#resetImage").click(function () {
+                $("#courseImage").attr("src", "/img/course/thumb/course-image-default.png");
+                $("#CreateCourseViewModel_CourseImageFile").val('');
+            });
+        }
+
+        function clearDemo() {
+            $("#resetDemo").click(function () {
+                $("#CreateCourseViewModel_CourseDemoFile").val('');
+            });
+        }
+
+        function onlyNumber() {
+            $('#CreateCourseViewModel_CoursePrice').on("input", function () {
+                let numericValue = $(this).val().replace(/[^0-9]/g, '');
+
+                let formattedValue = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                }).format(numericValue);
+
+                formattedValue = formattedValue.replace('$', '');
+
+                $(this).val(formattedValue);
+            });
+        }
+
+        function addCoursePreSubmit() {
+            let numericValue = $("#CreateCourseViewModel_CoursePrice").val().replace(/[^0-9]/g, '');
+            $("#CreateCourseViewModel_CoursePrice").val(numericValue);
+        }
+
+        function addCourseSubmit() {
+            $("#addCourseForm").submit(function (event) {
+                event.preventDefault();
+
+                addCoursePreSubmit();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '/Admin/Courses/CreateCourse',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "ذخیره موفقیت آمیز!",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+
+                            setTimeout(function () {
+                                window.location.href = '/Admin/Courses';
+                            }, 2000);
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "خطا در ذخیره اطلاعات!",
+                                text: result.message
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "خطا در ذخیره اطلاعات!",
+                            text: "در فرآیند ثبت دوره مشکلی بوجود آمده است"
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+}
+

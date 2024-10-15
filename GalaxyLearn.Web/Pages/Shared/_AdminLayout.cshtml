@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-topbar-color="light" data-menu-color="dark">
+<head>
+    <title>پنل ادمین | @ViewData["Title"]</title>
+    <partial name="_AdminMetaTags" />
+    <partial name="_AdminStyles" />
+    @RenderSection("Styles", false)
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+
+        <partial name="_AdminTopBar" />
+        <partial name="_AdminSideBar" />
+
+        <!-- Start Page Content here -->
+        <div class="content-page">
+            <div class="content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div> 
+            <partial name="_AdminFooter" />
+        </div>
+    </div>
+
+    <partial name="_AdminScripts" />
+    <partial name="_ValidationScriptsPartial" />
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

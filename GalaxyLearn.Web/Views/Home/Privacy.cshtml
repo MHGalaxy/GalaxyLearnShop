@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<link href="/css/verification.css" rel="stylesheet" />
+
+<div class="row justify-center items-center height-75">
+
+    <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-8 col-sm-10 height-100">
+        <div class="px-50 py-50 md:px-25 md:py-25 bg-white shadow-1 rounded-16">
+
+            <div class="text-center">
+                <h4>کد تایید ارسال شده را وارد کنید </h4><br />
+                <div>
+                    <span>
+                        کد به شماره
+                        <small>*******9897</small>
+                        ارسال شده
+                    </span>
+                </div>
+                <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2" dir="ltr">
+                    <input class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" />
+                </div>
+                <br />
+                <div class="content d-flex justify-content-center align-items-center">
+                    <button class="button -md -green-1 text-dark-1 fw-500 ">
+                        تایید
+                    </button>
+                </div>
+            </div>
+            <br />
+            <div class="content d-flex justify-content-center align-items-center">
+                <span>هنوز کد را دریافت نکردید؟ </span>
+                <a href="#" class="link-dark">ارسال مجدد کد تایید</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/verification.js"></script>
+
+    <script>
+
+
+        $(document)ready(function () {
+
+        });
+
+    </script>
+}

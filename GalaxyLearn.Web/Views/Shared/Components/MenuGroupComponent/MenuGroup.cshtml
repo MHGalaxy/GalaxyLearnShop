@@ -1,0 +1,37 @@
+﻿@using GalaxyLearn.DataLayer.Entities.Common
+@model IEnumerable<MenuGroup>
+
+
+<div class="menu js-navList">
+    <ul class="menu__nav text-white -is-active">
+
+        @foreach (var menu in Model.Where(m => m.ParentId == null))
+        {
+            var hasChildren = Model.Any(m => m.ParentId == menu.MenuGroupId);
+            @if (hasChildren)
+            {
+                <li class="menu-item-has-children">
+                    <a data-barba>
+                        @menu.MenuGroupTitle <i class="icon-chevron-left text-11 mr-10"></i>
+                    </a>
+                        <ul class="subnav">
+                            <li class="menu__backButton js-nav-list-back">
+                                <a><i class="icon-chevron-right text-13 ml-10"></i> @menu.MenuGroupTitle</a>
+                            </li>
+                            @foreach (var subMenu in Model.Where(m => m.ParentId == menu.MenuGroupId))
+                            {
+                                <li><a href="@subMenu.Link">@subMenu.MenuGroupTitle</a></li>
+                            }
+                        </ul>
+
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a data-barba href="@menu.Link">@menu.MenuGroupTitle</a>
+                </li>
+            }
+        }
+    </ul>
+</div>
